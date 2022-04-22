@@ -1,0 +1,9 @@
+How many errors were logged in each month of each year for the SAP_CubeDataload.txt
+
+How many errors and warnings were logged and what did the errors say.
+
+
+
+places to help find work:
+kforce, kellymitchel 
+

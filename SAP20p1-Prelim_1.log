@@ -1,0 +1,51 @@
+MAXL> login $key 0929223530912565884180813728702830063390 $key 0929223530487256595196879154801755416521873202613046310893311303274011 on "D00WAPPP0031";
+
+ WARNING - 1040156 - SSL initialization failed with error code [1008165]..
+ OK/INFO - 1051034 - Logging in user [admin@Native Directory].
+ OK/INFO - 1241001 - Logged in to Essbase.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> create or replace application 'SAP20p1' as 'SAP20';
+
+ WARNING - 1056228 - Cannot copy block storage to aggregate storage or vice versa. Copy will use same storage as original..
+   ERROR - 1013268 - Cannot copy application [SAP20] while [P2304432@CHTR] is performing [SpreadsheetOperation] on database [SAP20].
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> alter database 'SAP20p1'.'SAP20'  rename to 'SAP20p1';
+
+   ERROR - 1051030 - Application SAP20p1 does not exist.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> grant no_access on application 'SAP20p1' to 'FinIncSt_Only' ;
+
+   ERROR - 1051030 - Application SAP20p1 does not exist.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> grant no_access on application 'SAP20p1' to 'Finance' ;
+
+   ERROR - 1051030 - Application SAP20p1 does not exist.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> grant read on database 'SAP20p1'.'SAP20p1' to 'Governance' ;
+
+   ERROR - 1051030 - Application SAP20p1 does not exist.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+
+MAXL> grant read on database 'SAP20p1'.'SAP20p1' to 'PrelimAccess' ;
+
+   ERROR - 1051030 - Application SAP20p1 does not exist.
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020 - Test
+
+MAXL> logout;
+
+      User admin is logged out
+
+      essmsh timestamp: Wed Apr 08 16:11:20 2020
+

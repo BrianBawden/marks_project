@@ -1,0 +1,967 @@
+MAXL> login $key 0929223530912565884180813728702830063390 $key 0929223530487256595196879154801755416521873202613046310893311303274011 on "D00WAPPP0031";
+
+ WARNING - 1040156 - SSL initialization failed with error code [1008165]..
+ OK/INFO - 1051034 - Logging in user [admin@Native Directory].
+ OK/INFO - 1241001 - Logged in to Essbase.
+
+      essmsh timestamp: Thu Aug 27 09:31:01 2020
+
+MAXL> drop application StgSAPfl cascade force;
+
+   ERROR - 1051030 - Application StgSAPfl does not exist.
+
+      essmsh timestamp: Thu Aug 27 09:31:01 2020
+
+MAXL> create or replace application StgSAPfl as 'shSAPful';
+
+ WARNING - 1056228 - Cannot copy block storage to aggregate storage or vice versa. Copy will use same storage as original..
+ OK/INFO - 1054014 - Database shSAPful loaded.
+ OK/INFO - 1051061 - Application StgSAPfl loaded - connection established.
+ OK/INFO - 1054027 - Application [StgSAPfl] started with process id [8664].
+ OK/INFO - 1054005 - Shutting down application StgSAPfl.
+ OK/INFO - 1051061 - Application StgSAPfl loaded - connection established.
+ OK/INFO - 1054027 - Application [StgSAPfl] started with process id [11816].
+ OK/INFO - 1056010 - Application StgSAPfl created.
+
+      essmsh timestamp: Thu Aug 27 09:31:10 2020
+
+MAXL> alter database StgSAPfl.'shSAPful'  rename to StgSAPfl;
+
+ OK/INFO - 1056023 - Database StgSAPfl.shSAPful altered.
+
+      essmsh timestamp: Thu Aug 27 09:31:10 2020
+
+MAXL> import database StgSAPfl.StgSAPfl dimensions from data_file "D:\Shares\Scripts\DRMFiles\ODSFR_Years_Dim.txt"  
+   2> using server rules_file "D_yr.rul" 
+   3> on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Years.txt";
+
+ OK/INFO - 1054014 - Database StgSAPfl loaded.
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.203] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [2 2 2 2 2 2 2 2 2 2 2 2 2 2 15 2 2 8 1 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 14 1 1 7 1 1 ].
+ WARNING - 1012121 - Error encountered when loading member [T12]'s calc string [CASE WHEN IsAccType ([Account].CurrentMember,LAST) THEN ([Period].Currentmember,[View]. [MTD]) WHEN IsAccType ([Account].CurrentMember, FIRST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, AVERAGE) AND ISCHILD ([Period].Currentmember,[Peri...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [YTD]'s calc string [CASE WHEN IsAccType ([Account].CurrentMember,LAST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, FIRST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, AVERAGE) AND ISCHILD ([Period].Currentmember,[Period].[YearTotal]) THEN AVG ...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Act MTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[MTD]) - ([Actual],[Version].Proforma,[MTD])) ELSE (([Actual],[Version].Proforma,[MTD]))-([Scenario].Currentmember,[Version].CurrentMember,[MTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Act YTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[YTD]) - ([Actual],[Version].Proforma,[YTD])) ELSE (([Actual],[Version].Proforma,[YTD]))-([Scenario].Currentmember,[Version].CurrentMember,[YTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr MTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [MTD]) - ([Scenario].currentmember, [Years].currentmember, [MTD]) ) / Abs(([Scenario].[Act...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr YTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [YTD]) - ([Scenario].currentmember, [Years].currentmember, [YTD])) / Abs(([Scenario].[Act]...], ignored.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.235] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:12 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\ODSFR_Scenario_Dim.txt"  
+   2>   using server rules_file "D_sce.rul" 
+   3>   on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Scenario.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.203] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [2 2 2 2 2 2 2 2 2 2 2 2 2 2 15 8 2 8 1 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 14 7 1 7 1 1 ].
+ WARNING - 1012121 - Error encountered when loading member [T12]'s calc string [CASE WHEN IsAccType ([Account].CurrentMember,LAST) THEN ([Period].Currentmember,[View]. [MTD]) WHEN IsAccType ([Account].CurrentMember, FIRST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, AVERAGE) AND ISCHILD ([Period].Currentmember,[Peri...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [YTD]'s calc string [CASE WHEN IsAccType ([Account].CurrentMember,LAST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, FIRST) THEN [View].[MTD] WHEN IsAccType ([Account].CurrentMember, AVERAGE) AND ISCHILD ([Period].Currentmember,[Period].[YearTotal]) THEN AVG ...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Act MTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[MTD]) - ([Actual],[Version].Proforma,[MTD])) ELSE (([Actual],[Version].Proforma,[MTD]))-([Scenario].Currentmember,[Version].CurrentMember,[MTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Act YTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[YTD]) - ([Actual],[Version].Proforma,[YTD])) ELSE (([Actual],[Version].Proforma,[YTD]))-([Scenario].Currentmember,[Version].CurrentMember,[YTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr MTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [MTD]) - ([Scenario].currentmember, [Years].currentmember, [MTD]) ) / Abs(([Scenario].[Act...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr YTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [YTD]) - ([Scenario].currentmember, [Years].currentmember, [YTD])) / Abs(([Scenario].[Act]...], ignored.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.25] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:13 2020
+
+MAXL> import database StgSAPfl.StgSAPfl dimensions from data_file "D:\Shares\Scripts\DRMFiles\ODSFR_Period_Dim.txt" 
+   2>  using server rules_file "D_per.rul" 
+   3>  on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Period.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.203] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [2 2 2 2 2 2 2 2 2 2 2 2 2 32 15 8 2 8 1 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [1 1 1 1 1 1 1 1 1 1 1 1 1 19 14 7 1 7 1 1 ].
+ WARNING - 1012121 - Error encountered when loading member [vs Act MTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[MTD]) - ([Actual],[Version].Proforma,[MTD])) ELSE (([Actual],[Version].Proforma,[MTD]))-([Scenario].Currentmember,[Version].CurrentMember,[MTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Act YTD]'s calc string [CASE WHEN (IsUda([Account].CurrentMember,"Expense")) THEN (([Scenario].CurrentMember,[Version].CurrentMember,[YTD]) - ([Actual],[Version].Proforma,[YTD])) ELSE (([Actual],[Version].Proforma,[YTD]))-([Scenario].Currentmember,[Version].CurrentMember,[YTD...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr MTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [MTD]) - ([Scenario].currentmember, [Years].currentmember, [MTD]) ) / Abs(([Scenario].[Act...], ignored.
+ WARNING - 1012121 - Error encountered when loading member [vs Prior Yr YTD Pct]'s calc string [CASE WHEN IsLeaf([Years].currentmember) THEN CASE WHEN (IsUda([Account].currentmember,"Expense")) THEN (([Scenario].[Act], [Final], [Years].currentmember.Lag(1), [YTD]) - ([Scenario].currentmember, [Years].currentmember, [YTD])) / Abs(([Scenario].[Act]...], ignored.
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.25] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:15 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\ODSFR_Version_Dim.txt"  
+   2> using server rules_file "D_ver.rul"  
+   3>  on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Version.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.203] seconds.
+ WARNING - 1241114 - There were errors, look in D:\Shares\Scripts\SAP20\Log\StgSAPfl-Version.txt.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [2 2 2 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 1 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [1 1 1 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 1 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.25] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:16 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_DepartmentType_Hierarchy_Master.txt"  
+   2> using server rules_file "SD_dtype.rul"  
+   3>  on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Version.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.203] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [2 2 2 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [1 1 1 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.25] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:18 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Account_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_acc.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Account.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.531] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [3450 2 2 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [3389 1 1 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.359] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:20 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Stats_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_accst.rul"
+   3>   on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-AccountStats.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.766] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 2 2 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 1 1 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.469] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:22 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_CompanyCode_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_cc.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-CompanyCode.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.282] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 2 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 1 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.563] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:23 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_ProfitCenter_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_pc.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-ProfitCenter.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.282] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 2 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 1 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.5] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:25 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_CostCenter_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_costc.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-CostCenter.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [1.64] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 2 2 2 2 2 2 2 2 2 32 15 8 33 8 15 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 1 1 1 1 1 1 1 1 1 19 14 7 29 7 15 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.656] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:28 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Department_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_dep.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Department.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.375] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 2 2 2 2 2 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 1 1 1 1 1 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.672] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:30 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Level1_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_Lev1.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Level1.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.312] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 2 2 2 2 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 1 1 1 1 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.703] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:32 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Level2_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_Lev2.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Level2.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.328] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 2 2 2 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 1 1 1 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.688] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:33 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Level3_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_Lev3.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Level3.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.312] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 2 2 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 1 1 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.719] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:35 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Entity_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_ent.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Entity.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.36] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 637 2 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 599 1 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.797] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:37 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_InternalOrder_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_intor.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-InternalOrder.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.985] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 637 6057 2 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 599 6057 1 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.687] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:39 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_LOB_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_lob.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-LOB.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.297] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 637 6057 20 2 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 599 6057 19 1 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.765] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:41 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Channel_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_chan.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Channel.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.359] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 637 6057 20 451 2 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 599 6057 19 448 1 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.765] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:43 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  dimensions from data_file "D:\Shares\Scripts\DRMFiles\SAP_Legacy_Hierarchy_Master.txt" 
+   2>  using server rules_file "SD_leg.rul" 
+   3>    on error write to "D:\Shares\Scripts\SAP20\Log\StgSAPfl-Legacy.txt";
+
+ OK/INFO - 1053012 - Object [StgSAPfl] is locked by user [admin@Native Directory].
+ OK/INFO - 1007132 - Building Dimensions Elapsed Time : [0.312] seconds.
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1019017 - Reading Parameters For Database [Drxxxxxx].
+ OK/INFO - 1025029 - The IMPLIED_SHARE setting in essbase.cfg is ON.
+ OK/INFO - 1025032 - The implied share setting for the database is default (ON).
+ OK/INFO - 1007043 - Declared Dimension Sizes = [9163 154 639 13375 805 11 385 48 637 6057 20 451 5 32 15 8 33 8 17 2 ].
+ OK/INFO - 1007042 - Actual Dimension Sizes = [9092 152 601 13189 794 11 385 48 599 6057 19 448 5 19 14 7 29 7 17 1 ].
+ OK/INFO - 1200658 - The formula for member [T12] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act MTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Act YTD] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr MTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ OK/INFO - 1200658 - The formula for member [vs Prior Yr YTD Pct] is Complex. If possible, add a non-empty directive to optimize for sparse data..
+ WARNING - 1002023 - Set DataErrorLimit = 65000.
+ WARNING - 1002023 - Set SetSSProcRowLimit = 700000.
+ OK/INFO - 1200551 - Allocated TRIGMAXMEMSIZE: [4096] Bytes. .
+ OK/INFO - 1019010 - Writing Application Definition For [StgSAPfl].
+ OK/INFO - 1019011 - Writing Database Definition For [StgSAPfl].
+ OK/INFO - 1019022 - Writing Database Mapping For [StgSAPfl].
+ OK/INFO - 1007120 - Loading New Outline for Database [StgSAPfl] Succeeded.
+ OK/INFO - 1024033 - Missing Database Config File [D:\Oracle\Middleware\user_projects\epmsystem1\EssbaseServer\essbaseserver1\APP\StgSAPfl\StgSAPfl\StgSAPfl.cfg], Query logging disabled.
+ OK/INFO - 1007067 - Total Restructure Elapsed Time : [0.797] seconds.
+ OK/INFO - 1053013 - Object [StgSAPfl] unlocked by user [admin@Native Directory].
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:31:45 2020
+
+MAXL> alter database StgSAPfl.StgSAPfl destroy load_buffer with buffer_id 1;
+
+ WARNING - 1270040 - Data load buffer [1] does not exist.
+ OK/INFO - 1013273 - Database StgSAPfl.StgSAPfl altered.
+
+      essmsh timestamp: Thu Aug 27 09:31:45 2020
+
+MAXL> alter database StgSAPfl.StgSAPfl initialize load_buffer with buffer_id 1
+   2> 	property ignore_missing_values, ignore_zero_values;
+
+ OK/INFO - 1003099 - Buffer id [1] initialized with options: resource_usage[1.00], aggregate_sum, ignore_missings, ignore_zeros.
+ OK/INFO - 1013273 - Database StgSAPfl.StgSAPfl altered.
+
+      essmsh timestamp: Thu Aug 27 09:31:45 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\JDE_GLFact_toSAP.txt"
+   2> using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\CubeDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003065 - Data load stream contains [767] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [44.126] seconds.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:32:29 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_BalanceSheet_toSAP.txt"
+   2> using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\CubeBalanceSheetDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003065 - Data load stream contains [11021] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [2.734] seconds.
+ WARNING - 1241114 - There were errors, look in D:\Shares\Scripts\SAP20\Log\CubeBalanceSheetDataload.txt.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:32:32 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\JDE_BegBalance_toSAP.txt"
+   2> using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\CubeBegBalDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [2.391] seconds.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:32:34 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_StatstoSAP.txt"
+   2> using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\CubeStatsload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003055 - Aggregate storage applications ignore update to derived cells. [610] cells skipped.
+ WARNING - 1003065 - Data load stream contains [11753] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [22.766] seconds.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:32:57 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_GLFact_toSAP.txt"
+   2>  using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\SAP_CubeDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003065 - Data load stream contains [45055] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [18.5] seconds.
+ WARNING - 1241114 - There were errors, look in D:\Shares\Scripts\SAP20\Log\SAP_CubeDataload.txt.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:33:16 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_BegBalance_toSAP.txt"
+   2>  using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\SAP_DataloadBegBal.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003065 - Data load stream contains [797] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [0.25] seconds.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:33:16 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_PL_Budget_toSAP.txt"
+   2> using server rules_file "dataload.rul"
+   3>  to load_buffer with buffer_id 1
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\SAP_PL_BudgetDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003025 - DATAERRORLIMIT reached [65000]. Rejected records will no longer be logged.
+ WARNING - 1003065 - Data load stream contains [3672162] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [94.017] seconds.
+ WARNING - 1241114 - There were errors, look in D:\Shares\Scripts\SAP20\Log\SAP_PL_BudgetDataload.txt.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:34:51 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from data_file "D:\Shares\Scripts\DataFiles\SAP_Stat_Budget_toSAP.txt" 
+   2> using server rules_file "dataload.rul" 
+   3>  to load_buffer with buffer_id 1 
+   4>  on error write to "D:\Shares\Scripts\SAP20\Log\SAP_Stat_BudgetDataload.txt";
+
+ OK/INFO - 1019061 - Reading Rule SQL Information For Database [StgSAPfl].
+ OK/INFO - 1019025 - Reading Rules From Rule Object For Database [StgSAPfl].
+ OK/INFO - 1003040 - Parallel dataload enabled: [1] block prepare threads, [1] block write threads..
+ WARNING - 1003055 - Aggregate storage applications ignore update to derived cells. [330672] cells skipped.
+ WARNING - 1003065 - Data load stream contains [3137811] zero and [0] #MISSING cells.
+ OK/INFO - 1003053 - Data Load Elapsed Time with [dataload.rul] : [67.126] seconds.
+ WARNING - 1241114 - There were errors, look in D:\Shares\Scripts\SAP20\Log\SAP_Stat_BudgetDataload.txt.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:35:58 2020
+
+MAXL> import database StgSAPfl.StgSAPfl  data from load_buffer with buffer_id 1 override values create slice;
+
+ OK/INFO - 1003058 - Data load buffer commit elapsed time : [2.703] seconds.
+ OK/INFO - 1241113 - Database import completed ['StgSAPfl'.'StgSAPfl'].
+
+      essmsh timestamp: Thu Aug 27 09:36:01 2020
+
+MAXL> alter database StgSAPfl.StgSAPfl merge all data;
+
+   ERROR - 1270099 - There's no incremental data or it is already merged. Specified merge is not necessary.
+
+      essmsh timestamp: Thu Aug 27 09:36:01 2020
+
+MAXL> alter application SAP20 disable connects ;
+
+ OK/INFO - 1056013 - Application SAP20 altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:01 2020
+
+MAXL> alter database SAP20.SAP20 unlock all objects ;
+
+ OK/INFO - 1056023 - Database SAP20.SAP20 altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:01 2020
+
+MAXL> alter system logout session on application SAP20 force ;
+
+ OK/INFO - 1013220 - Supervisor [admin@Native Directory] has forced user [SBaker1@CHTR] to logout.
+ OK/INFO - 1051037 - Logging out user [SBaker1@CHTR], active for 8 minutes.
+ OK/INFO - 1013220 - Supervisor [admin@Native Directory] has forced user [P2728970@CHTR] to logout.
+ OK/INFO - 1051037 - Logging out user [P2728970@CHTR], active for 14 minutes.
+ OK/INFO - 1056092 - Sessions logged out [2].
+ OK/INFO - 1056090 - System altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:02 2020
+
+
+      essmsh timestamp: Thu Aug 27 09:36:21 2020
+
+MAXL> alter system kill request on application SAP20 ;
+
+ OK/INFO - 1056090 - System altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:21 2020
+
+
+      essmsh timestamp: Thu Aug 27 09:36:40 2020
+
+MAXL> drop application 'SAPbk' cascade force;
+
+ OK/INFO - 1054005 - Shutting down application SAPbk.
+ OK/INFO - 1056012 - Application SAPbk dropped.
+
+      essmsh timestamp: Thu Aug 27 09:36:43 2020
+
+MAXL> alter application SAP20  rename to 'SAPbk';
+
+ OK/INFO - 1054005 - Shutting down application SAP20.
+ OK/INFO - 1051061 - Application SAPbk loaded - connection established.
+ OK/INFO - 1054027 - Application [SAPbk] started with process id [29780].
+ OK/INFO - 1056013 - Application SAP20 altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:48 2020
+
+MAXL> alter database  SAPbk.SAP20 rename to 'SAPbk';
+
+ OK/INFO - 1056023 - Database SAPbk.SAP20 altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:48 2020
+
+MAXL> create or replace application 'SAP20' as 'StgSAPfl';
+
+ WARNING - 1056228 - Cannot copy block storage to aggregate storage or vice versa. Copy will use same storage as original..
+ OK/INFO - 1054014 - Database StgSAPfl loaded.
+ OK/INFO - 1051061 - Application SAP20 loaded - connection established.
+ OK/INFO - 1054027 - Application [SAP20] started with process id [17884].
+ OK/INFO - 1054005 - Shutting down application SAP20.
+ OK/INFO - 1051061 - Application SAP20 loaded - connection established.
+ OK/INFO - 1054027 - Application [SAP20] started with process id [8836].
+ OK/INFO - 1056010 - Application SAP20 created.
+
+      essmsh timestamp: Thu Aug 27 09:36:59 2020
+
+MAXL> alter database SAP20.StgSAPfl  rename to SAP20;
+
+ OK/INFO - 1056023 - Database SAP20.StgSAPfl altered.
+
+      essmsh timestamp: Thu Aug 27 09:36:59 2020
+
+MAXL> alter application SAP20 load database SAP20;
+
+ OK/INFO - 1054014 - Database SAP20 loaded.
+ OK/INFO - 1056013 - Application SAP20 altered.
+
+      essmsh timestamp: Thu Aug 27 09:37:00 2020
+
+MAXL> grant read on database SAP20.SAP20 to 'Governance' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['Governance'].
+
+      essmsh timestamp: Thu Aug 27 09:37:01 2020
+
+MAXL> grant read on database SAP20.SAP20 to 'Finance' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['Finance'].
+
+      essmsh timestamp: Thu Aug 27 09:37:01 2020
+
+MAXL> grant read on database SAP20.SAP20 to 'DIM_Admin' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['DIM_Admin'].
+
+      essmsh timestamp: Thu Aug 27 09:37:02 2020
+
+MAXL> grant read on database SAP20.SAP20 to 'Tax' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['Tax'].
+
+      essmsh timestamp: Thu Aug 27 09:37:02 2020
+
+MAXL> drop application SAP20p1 cascade force;
+
+ OK/INFO - 1054005 - Shutting down application SAP20p1.
+ OK/INFO - 1056012 - Application SAP20p1 dropped.
+
+      essmsh timestamp: Thu Aug 27 09:37:05 2020
+
+MAXL> alter application StgSAPfl rename to SAP20p1 ;
+
+ OK/INFO - 1054005 - Shutting down application StgSAPfl.
+ OK/INFO - 1051061 - Application SAP20p1 loaded - connection established.
+ OK/INFO - 1054027 - Application [SAP20p1] started with process id [11396].
+ OK/INFO - 1056013 - Application StgSAPfl altered.
+
+      essmsh timestamp: Thu Aug 27 09:37:10 2020
+
+MAXL> alter database SAP20p1.StgSAPfl  rename to SAP20p1;
+
+ OK/INFO - 1056023 - Database SAP20p1.StgSAPfl altered.
+
+      essmsh timestamp: Thu Aug 27 09:37:10 2020
+
+MAXL> grant no_access on application 'SAP20p1' to 'FinIncSt_Only' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['FinIncSt_Only'].
+
+      essmsh timestamp: Thu Aug 27 09:37:10 2020
+
+MAXL> grant no_access on application 'SAP20p1' to 'Finance' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['Finance'].
+
+      essmsh timestamp: Thu Aug 27 09:37:11 2020
+
+MAXL> grant read on database 'SAP20p1'.'SAP20p1' to 'Governance' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['Governance'].
+
+      essmsh timestamp: Thu Aug 27 09:37:11 2020
+
+MAXL> grant read on database 'SAP20p1'.'SAP20p1' to 'PrelimAccess' ;
+
+ OK/INFO - 1056074 - Grant succeeded for user or user group: ['PrelimAccess'].
+
+      essmsh timestamp: Thu Aug 27 09:37:12 2020
+
+MAXL> logout;
+
+      User admin is logged out
+
+      essmsh timestamp: Thu Aug 27 09:37:12 2020
+
